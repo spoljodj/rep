@@ -23,8 +23,9 @@ Opis            text
 create table shop(
 id_shop         int not null primary key auto_increment,
 Naziv           varchar(255) not null,
-Tip             varchar(255),
+Tip             varchar(255) not null,
 Opis            text,
+Velicina        varchar(20) not null,
 Prodavac        int not null,
 Item            int not null
 );
