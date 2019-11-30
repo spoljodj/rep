@@ -3,45 +3,41 @@ create database zavrsnirad default character set utf8;
 #c:\xampp\mysql\bin\mysql.exe -uedunova -pedunova --default_character_set=utf8 < d:\zavrsnirad.sql
 use zavrsnirad;
 
-create table prodavac(
-id_prodavac     int not null primary key auto_increment,
-Ime             varchar(50) not null,
-Prezime         varchar(50),
-Rasa            varchar(20) not null,
-Dob             varchar(10),
-Opis            text
+create table shopkeeper(
+Shopkeeper_id          int not null primary key auto_increment,
+First_name             varchar(50) not null,
+Last_name              varchar(50) not null,
+Race                   varchar(20) not null,
+Age                    varchar(10),
+Description            text
 );
 
 create table item(
-id_item         int not null primary key auto_increment,
-Naziv           varchar(255) not null,
-Tip             int not null,
-Cijena          decimal(18,2) not null,
-Opis            text not null
+Item_id         int not null primary key auto_increment,
+Name            varchar(255) not null,
+Type            varchar(50) not null,
+Cost            decimal(18,2) not null,
+Description     text not null,
+Rarity          varchar(20) not null
 );
 
-create table Tip(
-id_tip              int not null primary key auto_increment,
-Naziv_tipa          varchar(20) not null,
-Statistika_itema    varchar (100) not null
-);
-
-create table naziv_shopa(
-id_naziv        int not null primary key auto_increment,
-Naziv           varchar(100) not null
-);
 
 create table shop(
-Naziv           int not null,
-Tip             varchar(255) not null,
-Velicina        varchar(20)not null,
-Opis_shopa      text not null,
-Prodavac        int not null,
-Item            int not null
+Shop_id         int not null primary key auto_increment,
+S_name          varchar(50) not null,
+Type            varchar(50) not null,
+S_size          varchar(20)not null,
+S_description   text not null,
+shopkeeper      int not null
 );
 
-alter table item add foreign key(Tip) references Tip(id_tip);
+create table generated(
+shop        int not null,
+item        int not null
+);
 
-alter table shop add foreign key(Prodavac) references prodavac(id_prodavac);
-alter table shop add foreign key(Item) references Item(id_item);
-alter table shop add foreign key(Naziv) references naziv_shopa(id_naziv);
+alter table shop add foreign key(shopkeeper) references shopkeeper(Shopkeeper_id);
+
+alter table generated add foreign key(shop) references shop(Shop_id);
+alter table generated add foreign key(item) references item(Item_id);
+
